@@ -5,7 +5,7 @@ from eve_data.data.loading import load_data
 
 class Command(BaseCommand):
     args = ''
-    help = 'Load data.'
+    help = 'Process all SQL files and load the data into models.'
 
     def handle(self, *args, **options):
         models.Item.objects.all().delete()

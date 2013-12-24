@@ -54,7 +54,7 @@ def get_fields(path, field_handling):
         if not line.startswith('INSERT'):
             continue
 
-        line = re.sub(r'\\r\\n', r'\\n', line)
+        line = re.sub(r'\\r\\n', r'\n', line)
         line = re.sub(r"\\'", '"', line)
 
         for item in re.findall('[(]([^)]+)[)](?=[,][(])', line):
