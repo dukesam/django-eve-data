@@ -38,5 +38,20 @@ class Item(models.Model):
     published = models.BooleanField(default=False)
     market_group_id = models.IntegerField(blank=True, null=True)
 
+    materials = models.ManyToManyField(
+        'self',
+        through='ItemMaterials',
+        symmetrical=False,
+        related_name='materials+'
+    )
+
     def __unicode__(self):
         return self.name
+
+class ItemMaterials(models.Model):
+    item = models.ForeignKey(Item, related_name='components')
+    material = models.ForeignKey(Item, related_name='assembled_with')
+    quantity = models.IntegerField()
+
+    class Meta:
+        unique_together = ('item', 'material')

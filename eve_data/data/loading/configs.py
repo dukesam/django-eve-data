@@ -53,5 +53,17 @@ loading_data = OrderedDict((
             ],
             'model': models.Item,
         },
-    )
+    ),
+    (
+        'invTypeMaterials',
+        {
+            'fields': [
+                FieldData('item', 0, utils.to_model(models.Item)),
+                FieldData('material', 1, utils.to_model(models.Item)),
+                FieldData('quantity', 2, utils.to_int),
+            ],
+            'model': models.ItemMaterials,
+        }
+
+    ),
 ))
