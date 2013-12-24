@@ -8,6 +8,9 @@ class ItemCategory(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'Item categories'
+
 
 class ItemGroup(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -53,5 +56,10 @@ class ItemMaterials(models.Model):
     material = models.ForeignKey(Item, related_name='assembled_with')
     quantity = models.IntegerField()
 
+    def __unicode__(self):
+        return '{material} amount in {item}'.format(
+            material=self.material.name, item=self.item.name)
+
     class Meta:
         unique_together = ('item', 'material')
+        verbose_name_plural = 'Item materials'
