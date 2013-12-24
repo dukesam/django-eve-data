@@ -48,9 +48,8 @@ class StringHider(object):
         return key
 
 
-def get_fields(path, field_handling):
-    fo = open(path, 'r')
-    for line in fo.readlines():
+def get_fields(contents, field_handling):
+    for line in contents.splitlines():
         if not line.startswith('INSERT'):
             continue
 
