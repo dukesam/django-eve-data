@@ -5,6 +5,9 @@ class ItemCategory(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
 
+    def __unicode__(self):
+        return self.name
+
 
 class ItemGroup(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -17,6 +20,9 @@ class ItemGroup(models.Model):
     anchored = models.BooleanField(default=False)
     allow_anchor = models.BooleanField(default=False)
     fittable_non_singleton = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Item(models.Model):
@@ -31,3 +37,6 @@ class Item(models.Model):
     race = models.CharField(max_length=255, blank=True, null=True)
     published = models.BooleanField(default=False)
     market_group_id = models.IntegerField(blank=True, null=True)
+
+    def __unicode__(self):
+        return self.name
