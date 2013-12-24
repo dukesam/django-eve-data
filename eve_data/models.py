@@ -63,3 +63,20 @@ class ItemMaterials(models.Model):
     class Meta:
         unique_together = ('item', 'material')
         verbose_name_plural = 'Item materials'
+
+class Region(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    radius = models.DecimalField(max_digits=20, decimal_places=0)
+    x = models.DecimalField(max_digits=20, decimal_places=0)
+    y = models.DecimalField(max_digits=20, decimal_places=0)
+    z = models.DecimalField(max_digits=20, decimal_places=0)
+    min_x = models.DecimalField(max_digits=20, decimal_places=0)
+    min_y = models.DecimalField(max_digits=20, decimal_places=0)
+    min_z = models.DecimalField(max_digits=20, decimal_places=0)
+    max_x = models.DecimalField(max_digits=20, decimal_places=0)
+    max_y = models.DecimalField(max_digits=20, decimal_places=0)
+    max_z = models.DecimalField(max_digits=20, decimal_places=0)
+
+    def __unicode__(self):
+        return self.name

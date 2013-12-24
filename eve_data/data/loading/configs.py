@@ -9,61 +9,81 @@ loading_data = OrderedDict((
     (
         'invCategories',
         {
-            'fields': [
-                FieldData('id', 0, utils.to_int),
-                FieldData('name', 1, utils.to_str),
-                FieldData('description', 2, utils.to_str),
-            ],
+            'fields': [FieldData(*x) for x in [
+                ('id', 0, utils.to_int),
+                ('name', 1, utils.to_str),
+                ('description', 2, utils.to_str),
+            ]],
             'model': models.ItemCategory,
         },
     ),
     (
         'invGroups',
         {
-            'fields': [
-                FieldData('id', 0, utils.to_int),
-                FieldData('category', 1, utils.to_model(models.ItemCategory)),
-                FieldData('name', 2, utils.to_str),
-                FieldData('description', 3, utils.to_str),
-                FieldData('base_price', 5, utils.to_int),
-                FieldData('allow_manufacture', 6, utils.to_bool),
-                FieldData('allow_recycle', 7, utils.to_bool),
-                FieldData('anchored', 8, utils.to_bool),
-                FieldData('allow_anchor', 9, utils.to_bool),
-                FieldData('fittable_non_singleton', 10, utils.to_bool),
-            ],
+            'fields': [FieldData(*x) for x in [
+                ('id', 0, utils.to_int),
+                ('category', 1, utils.to_model(models.ItemCategory)),
+                ('name', 2, utils.to_str),
+                ('description', 3, utils.to_str),
+                ('base_price', 5, utils.to_int),
+                ('allow_manufacture', 6, utils.to_bool),
+                ('allow_recycle', 7, utils.to_bool),
+                ('anchored', 8, utils.to_bool),
+                ('allow_anchor', 9, utils.to_bool),
+                ('fittable_non_singleton', 10, utils.to_bool),
+            ]],
             'model': models.ItemGroup,
         },
     ),
     (
         'invTypes',
         {
-            'fields': [
-                FieldData('id', 0, utils.to_int),
-                FieldData('group', 1, utils.to_model(models.ItemGroup)),
-                FieldData('name', 2, utils.to_str),
-                FieldData('description', 3, utils.to_str),
-                FieldData('mass', 4, utils.to_dec),
-                FieldData('volume', 5, utils.to_dec),
-                FieldData('capacity', 6, utils.to_dec),
-                FieldData('portion_size', 7, utils.to_int),
-                FieldData('race', 8, utils.to_str),
-                FieldData('published', 10, utils.to_bool),
-                FieldData('market_group_id', 11, utils.to_str),
-            ],
+            'fields': [FieldData(*x) for x in [
+                ('id', 0, utils.to_int),
+                ('group', 1, utils.to_model(models.ItemGroup)),
+                ('name', 2, utils.to_str),
+                ('description', 3, utils.to_str),
+                ('mass', 4, utils.to_dec),
+                ('volume', 5, utils.to_dec),
+                ('capacity', 6, utils.to_dec),
+                ('portion_size', 7, utils.to_int),
+                ('race', 8, utils.to_str),
+                ('published', 10, utils.to_bool),
+                ('market_group_id', 11, utils.to_str),
+            ]],
             'model': models.Item,
         },
     ),
     (
         'invTypeMaterials',
         {
-            'fields': [
-                FieldData('item', 0, utils.to_model(models.Item)),
-                FieldData('material', 1, utils.to_model(models.Item)),
-                FieldData('quantity', 2, utils.to_int),
-            ],
+            'fields': [FieldData(*x) for x in [
+                ('item', 0, utils.to_model(models.Item)),
+                ('material', 1, utils.to_model(models.Item)),
+                ('quantity', 2, utils.to_int),
+            ]],
             'model': models.ItemMaterials,
         }
 
+    ),
+    (
+        'mapRegions',
+        {
+            'fields': [FieldData(*x) for x in [
+                ('id', 0, utils.to_int),
+                ('name', 1, utils.to_str),
+                ('x', 2, utils.to_dec),
+                ('y', 3, utils.to_dec),
+                ('z', 4, utils.to_dec),
+                ('min_x', 5, utils.to_dec),
+                ('max_x', 6, utils.to_dec),
+                ('min_y', 7, utils.to_dec),
+                ('max_y', 8, utils.to_dec),
+                ('min_z', 9, utils.to_dec),
+                ('max_z', 10, utils.to_dec),
+                ('radius', 12, utils.to_dec),
+            ]],
+            'model': models.Region,
+        }
     ),
 ))
