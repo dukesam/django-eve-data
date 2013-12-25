@@ -117,3 +117,6 @@ class Station(models.Model):
     security = models.DecimalField(max_digits=6, decimal_places=5)
     reprocessing_efficiency = models.DecimalField(max_digits=3, decimal_places=2)
     reprocessing_cost = models.DecimalField(max_digits=3, decimal_places=2)
+
+    def __unicode__(self):
+        return self.name
