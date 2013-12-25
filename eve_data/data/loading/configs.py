@@ -86,4 +86,54 @@ loading_data = OrderedDict((
             'model': models.Region,
         }
     ),
+    (
+        'mapConstellations',
+        {
+            'fields': [FieldData(*x) for x in [
+                ('region', 0, utils.to_model(models.Region)),
+                ('id', 1, utils.to_int),
+                ('name', 2, utils.to_str),
+                ('x', 3, utils.to_dec),
+                ('y', 4, utils.to_dec),
+                ('z', 5, utils.to_dec),
+                ('min_x', 6, utils.to_dec),
+                ('max_x', 7, utils.to_dec),
+                ('min_y', 8, utils.to_dec),
+                ('max_y', 9, utils.to_dec),
+                ('min_z', 10, utils.to_dec),
+                ('max_z', 11, utils.to_dec),
+                ('radius', 13, utils.to_dec),
+            ]],
+            'model': models.Constellation,
+        }
+    ),
+    (
+        'mapSolarSystems',
+        {
+            'fields': [FieldData(*x) for x in [
+                ('region', 0, utils.to_model(models.Region)),
+                ('constellation', 1, utils.to_model(models.Constellation)),
+                ('id', 2, utils.to_int),
+                ('name', 3, utils.to_str),
+                ('x', 4, utils.to_dec),
+                ('y', 5, utils.to_dec),
+                ('z', 6, utils.to_dec),
+                ('min_x', 7, utils.to_dec),
+                ('max_x', 8, utils.to_dec),
+                ('min_y', 9, utils.to_dec),
+                ('max_y', 10, utils.to_dec),
+                ('min_z', 11, utils.to_dec),
+                ('max_z', 12, utils.to_dec),
+                ('border', 14, utils.to_bool),
+                ('dead_end', 15, utils.to_bool),
+                ('corridor', 16, utils.to_bool),
+                ('hub', 17, utils.to_bool),
+                ('inter_regional', 18, utils.to_bool),
+                ('inter_constellational', 19, utils.to_bool),
+                ('security', 20, utils.to_dec),
+                ('radius', 23, utils.to_dec),
+            ]],
+            'model': models.SolarSystem,
+        }
+    ),
 ))

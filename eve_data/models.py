@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ItemCategory(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -51,6 +52,7 @@ class Item(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class ItemMaterials(models.Model):
     item = models.ForeignKey(Item, related_name='components')
     material = models.ForeignKey(Item, related_name='assembled_with')
@@ -64,7 +66,8 @@ class ItemMaterials(models.Model):
         unique_together = ('item', 'material')
         verbose_name_plural = 'Item materials'
 
-class Region(models.Model):
+
+class Location(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     radius = models.DecimalField(max_digits=20, decimal_places=0)
@@ -80,3 +83,26 @@ class Region(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        abstract = True
+
+
+class Region(Location):
+    pass
+
+
+class Constellation(Location):
+    region = models.ForeignKey(Region)
+
+
+class SolarSystem(Location):
+    region = models.ForeignKey(Region)
+    constellation = models.ForeignKey(Constellation)
+    border = models.BooleanField(default=False)
+    dead_end = models.BooleanField(default=False)
+    corridor = models.BooleanField(default=False)
+    hub = models.BooleanField(default=False)
+    inter_regional = models.BooleanField(default=False)
+    inter_constellational = models.BooleanField(default=False)
+    security = models.DecimalField(max_digits=6, decimal_places=5)
