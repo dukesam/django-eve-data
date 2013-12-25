@@ -136,4 +136,21 @@ loading_data = OrderedDict((
             'model': models.SolarSystem,
         }
     ),
+    (
+        'staStations',
+        {
+            'fields':[FieldData(*x) for x in [
+                ('id', 0, utils.to_int),
+                ('security', 1, utils.to_dec),
+                ('solar_system', 8, utils.to_model(models.SolarSystem)),
+                ('constellation', 9, utils.to_model(models.Constellation)),
+                ('region', 10, utils.to_model(models.Region)),
+                ('name', 11, utils.to_str),
+                ('reprocessing_efficiency', 15, utils.to_dec),
+                ('reprocessing_cost', 16, utils.to_dec),
+            ]],
+            'model': models.Station
+
+        }
+    ),
 ))

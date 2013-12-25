@@ -106,3 +106,14 @@ class SolarSystem(Location):
     inter_regional = models.BooleanField(default=False)
     inter_constellational = models.BooleanField(default=False)
     security = models.DecimalField(max_digits=6, decimal_places=5)
+
+
+class Station(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255)
+    solar_system = models.ForeignKey(SolarSystem, related_name='stations')
+    constellation = models.ForeignKey(Constellation, related_name='stations')
+    region = models.ForeignKey(Region, related_name='stations')
+    security = models.DecimalField(max_digits=6, decimal_places=5)
+    reprocessing_efficiency = models.DecimalField(max_digits=3, decimal_places=2)
+    reprocessing_cost = models.DecimalField(max_digits=3, decimal_places=2)
