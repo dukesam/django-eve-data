@@ -10,8 +10,10 @@ def load_data():
         full_path = os.path.join(sql.__path__[0], filename + '.zip')
         zp = zipfile.ZipFile(full_path)
         contents = zp.read('sql/{0}'.format(filename))
+        model_instances = []
         for row in utils.get_fields(contents, data['fields']):
             try:
-                data['model'].objects.create(**row)
+                model_instances.append(data['model'](**row))
             except ValueError:
                 continue
+        data['model'].objects.bulk_create(model_instances)

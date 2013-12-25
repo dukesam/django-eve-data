@@ -25,11 +25,14 @@ def to_str(value):
 
 
 def to_model(model):
+    cache = {}
     def func(value):
-        try:
-            return model.objects.get(id=value)
-        except model.DoesNotExist:
-            return None
+        if value not in cache:
+            try:
+                cache[value] = model.objects.get(id=value)
+            except model.DoesNotExist:
+                cache[value] = None
+        return cache[value]
     return func
 
 
@@ -38,12 +41,11 @@ class StringHider(object):
 
     def __init__(self):
         self.storage = {}
+        self.curr_count = 0
 
     def hide(self, matchobj):
-        while True:
-            key = self.base_key.format(random.randint(0, 1000))
-            if key not in self.storage:
-                break
+        self.curr_count += 1
+        key = self.base_key.format(self.curr_count)
         self.storage[key] = matchobj.group(1)
         return key
 
