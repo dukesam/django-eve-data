@@ -50,7 +50,7 @@ class StringHider(object):
         return key
 
 
-def get_fields(contents, field_handling):
+def get_raw_fields(contents):
     for line in contents.splitlines():
         if not line.startswith('INSERT'):
             continue
@@ -58,7 +58,7 @@ def get_fields(contents, field_handling):
         line = re.sub(r'\\r\\n', r'\n', line)
         line = re.sub(r"\\'", '"', line)
 
-        for item in re.findall('[(]([^)]+)[)](?=[,][(])', line):
+        for item in re.findall('[(]([^)]+)[)](?=(?:[,][(])|(?:[;]$))', line):
             hider = StringHider()
             item = re.sub(STR_RE, hider.hide, item)
 
@@ -68,8 +68,16 @@ def get_fields(contents, field_handling):
                     pieces[i] = None
                 elif p in hider.storage:
                     pieces[i] = hider.storage[p]
-            kwargs = {}
-            for field_def in field_handling:
-                kwargs[field_def.name] = field_def.convert(pieces[field_def.pos])
+            if pieces[2] == 30003459:
+                print pieces
 
-            yield kwargs
+            yield pieces
+
+
+def get_fields(contents, field_handling):
+    for pieces in get_raw_fields(contents):
+        kwargs = {}
+        for field_def in field_handling:
+            kwargs[field_def.name] = field_def.convert(pieces[field_def.pos])
+
+        yield kwargs

@@ -106,6 +106,12 @@ class SolarSystem(Location):
     inter_regional = models.BooleanField(default=False)
     inter_constellational = models.BooleanField(default=False)
     security = models.DecimalField(max_digits=6, decimal_places=5)
+    connections = models.ManyToManyField(
+        'self',
+        blank=True,
+        null=True,
+        symmetrical=True,
+    )
 
 
 class Station(models.Model):
