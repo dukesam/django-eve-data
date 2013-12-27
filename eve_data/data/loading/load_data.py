@@ -26,6 +26,7 @@ def load_data():
             except ValueError:
                 continue
         data['model'].objects.bulk_create(model_instances)
+        print 'Finished {0}'.format(table_name)
 
     connections = {}
     conn_contents = get_table_contents('mapSolarSystemJumps')
@@ -41,10 +42,20 @@ def load_data():
         system.connections.add(*dst_systems)
 
     if hasattr(settings, 'EVE_DATA_NEO4J_INSTANCE'):
-        from neo4jrestclient.client import GraphDatabase
-        gdb = GraphDatabase(settings.EVE_DATA_NEO4J_INSTANCE)
+        from neo4jrestclient import client
+        gdb = client.GraphDatabase(settings.EVE_DATA_NEO4J_INSTANCE)
 
-        nodes = {sys_id: gdb.nodes.create(name=sys_id) for sys_id in systems}
+        node_data = list(gdb.query("""start n=node(*) return n"""))
+        for n in node_data:
+            node = client.Node(n[0]['self'])
+            for r in node.relationships.all():
+                r.delete()
+            node.delete()
+
+        nodes = {
+            sys_id: gdb.nodes.create(name=sys_id, security=float(system.security))
+            for sys_id, system in systems.items()
+        }
         for sys_id, connection_list in connections.items():
             src_node = nodes[sys_id]
             for dst_id in connection_list:

@@ -1,3 +1,6 @@
+from neo4jrestclient import client
+
+from django.conf import settings
 from django.db import models
 
 
@@ -112,6 +115,20 @@ class SolarSystem(Location):
         null=True,
         symmetrical=True,
     )
+
+    def get_nodes_within(self, jump_range=5, security=0.45):
+        gdb = client.GraphDatabase(settings.EVE_DATA_NEO4J_INSTANCE)
+
+        dst_ids = [s[0] for s in gdb.query(
+            """
+                match p=(src {name: {system_id}})-[r:Connects*1..%d]->(dst)
+                where all(n in nodes(p) where n.security > {security})
+                return dst.name
+            """ % (jump_range),
+            {'system_id': self.id , 'security': security}
+        )]
+
+        return SolarSystem.objects.filter(id__in=dst_ids)
 
 
 class Station(models.Model):
