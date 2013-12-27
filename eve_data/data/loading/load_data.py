@@ -48,4 +48,4 @@ def load_data():
         for sys_id, connection_list in connections.items():
             src_node = nodes[sys_id]
             for dst_id in connection_list:
-                src_node.relationships.create('Jumps to', nodes[dst_id])
+                src_node.relationships.create('Connects', nodes[dst_id])
