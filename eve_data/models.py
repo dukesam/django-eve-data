@@ -14,6 +14,7 @@ class ItemCategory(models.Model):
 
     class Meta:
         verbose_name_plural = 'Item categories'
+        ordering = ['name']
 
 
 class ItemGroup(models.Model):
@@ -89,6 +90,7 @@ class Location(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ['name']
 
 
 class Region(Location):
@@ -129,6 +131,9 @@ class SolarSystem(Location):
         )]
 
         return SolarSystem.objects.filter(id__in=dst_ids)
+
+    def get_display_sec(self):
+        return round(self.security, 1)
 
 
 class Station(models.Model):
